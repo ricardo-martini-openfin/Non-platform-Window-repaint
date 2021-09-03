@@ -1,34 +1,22 @@
-// uncomment line below to register offline cache service worker 
-// navigator.serviceWorker.register('../serviceworker.js');
+console.log("connected")
 
-if (typeof fin !== 'undefined') {
-    init();
+let show = true
+
+function hide() {
+const timeDiv = document.querySelector(".img")
+
+
+if (show) {
+    timeDiv.style.visibility = "hidden"
 } else {
-    document.querySelector('#of-version').innerText =
-        'The fin API is not available - you are probably running in a browser.';
+    timeDiv.style.visibility = "visible"
 }
 
-//once the DOM has loaded and the OpenFin API is ready
-async function init() {
-    //get a reference to the current Application.
-    const app = await fin.Application.getCurrent();
-    const win = await fin.Window.getCurrent();
+show = !show
+}
 
-    const ofVersion = document.querySelector('#of-version');
-    ofVersion.innerText = await fin.System.getVersion();
+function newImg(){
+    const urls = [100,101,102,200, 201, 202]
 
-    //Only launch new windows from the main window.
-    if (win.identity.name === app.identity.uuid) {
-        //subscribing to the run-requested events will allow us to react to secondary launches, clicking on the icon once the Application is running for example.
-        //for this app we will  launch a child window the first the user clicks on the desktop.
-        app.once('run-requested', async () => {
-            await fin.Window.create({
-                name: 'childWindow',
-                url: location.href,
-                defaultWidth: 320,
-                defaultHeight: 320,
-                autoShow: true
-            });
-        });
-    }
+    let imgSrc = document.querySelector("#cat").setAttribute("src", `https://http.cat/${urls[Math.floor(Math.random() * urls.length)]}`)
 }
